@@ -5,25 +5,29 @@
 </head>
 <body>
 
-<h2>Ask Electrical Machine Question</h2>
-
-{% if success %}
-<p>Question Saved Successfully!</p>
-{% endif %}
+<h2>Ask Electrical Machines Question</h2>
 
 <form method="POST">
     {% csrf_token %}
-    {{ form.as_p }}
+
+    <textarea
+        name="question"
+        rows="5"
+        cols="50"
+        placeholder="Ask about transformers, motors, generators..."
+    ></textarea>
+
+    <br><br>
 
     <button type="submit">
-        Submit
+        Get Answer
     </button>
+
 </form>
 
-<br>
-
-<a href="/">Home</a>
+{% if success %}
+    <p style="color:green;">Your question was submitted successfully.</p>
+{% endif %}
 
 </body>
 </html>
-

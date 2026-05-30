@@ -39,9 +39,13 @@ def register_user(request):
 
 
 def login_user(request):
+    error = None
+    # Respect `next` parameter so users return to protected pages after login
+    next_url = request.POST.get('next') or request.GET.get('next') or None
+
     if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
+        username = request.POST.get("username")
+        password = request.POST.get("password")
 
         user = authenticate(
             request,
@@ -51,9 +55,11 @@ def login_user(request):
 
         if user:
             login(request, user)
-            return redirect("home")
+            return redirect(next_url or "home")
 
-    return render(request, "login.html")
+        error = "Invalid username or password"
+
+    return render(request, "login.html", {"error": error, "next": next_url})
 
 
 def logout_user(request):

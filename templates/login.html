@@ -7,6 +7,10 @@
 
 <h2>Login</h2>
 
+{% if error %}
+<p style="color:red;">{{ error }}</p>
+{% endif %}
+
 <form method="POST">
     {% csrf_token %}
 
@@ -15,6 +19,12 @@
 
     <input type="password" name="password" placeholder="Password">
     <br><br>
+
+    {% if next %}
+        <input type="hidden" name="next" value="{{ next }}">
+    {% elif request.GET.next %}
+        <input type="hidden" name="next" value="{{ request.GET.next }}">
+    {% endif %}
 
     <button type="submit">Login</button>
 
