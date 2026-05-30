@@ -1,22 +1,45 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Electrical Machines Q&A</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-<h1>Electrical Machines Q&A Platform</h1>
+{% block title %}Home — VoltieAI{% endblock %}
 
-{% if user.is_authenticated %}
-    <h3>Welcome {{ user.username }}</h3>
-    <a href="{% url 'ask_question' %}">Ask Question</a>
-    <a href="{% url 'logout' %}">Logout</a>
-{% else %}
-    <a href="{% url 'register' %}">Register</a>
-    <br><br>
-    <a href="{% url 'login' %}">Login</a>
-{% endif %}
+{% block content %}
+    <div class="hero py-5 text-center text-white">
+        <div class="container">
+            <h1 class="display-5 fw-bold mb-3">Electrical Machines AI Assistant</h1>
+            <p class="lead mb-4 text-muted">Ask questions about transformers, motors, generators, alternators and electrical machines.</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a class="btn btn-lg btn-gradient" href="{% url 'ask_question' %}">Ask Question</a>
+                <a class="btn btn-outline-light btn-lg" href="/history/">View History</a>
+            </div>
+        </div>
+    </div>
 
-</body>
-</html>
+    <div class="row mt-5 g-4">
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="glass card-hover p-4 h-100">
+                <h5 class="mb-2">AI Powered Answers</h5>
+                <p class="text-muted small">Fast, context-aware answers powered by AI.</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="glass card-hover p-4 h-100">
+                <h5 class="mb-2">Question History</h5>
+                <p class="text-muted small">Track and review your previous questions.</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="glass card-hover p-4 h-100">
+                <h5 class="mb-2">Secure Authentication</h5>
+                <p class="text-muted small">Built with Django auth and session security.</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="glass card-hover p-4 h-100">
+                <h5 class="mb-2">Electrical Engineering Knowledge</h5>
+                <p class="text-muted small">Domain-specific answers for engineering topics.</p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
 

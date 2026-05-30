@@ -1,0 +1,100 @@
+:root{
+  --bg:#0f172a;
+  --primary:#3b82f6;
+  --accent:#06b6d4;
+  --muted:#94a3b8;
+}
+
+body.bg-dark-app{
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(59,130,246,0.04), transparent), var(--bg);
+  color: #e6eef8;
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+.nav-glass{
+  background: rgba(6,11,20,0.6);
+  backdrop-filter: blur(6px) saturate(120%);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+.brand-logo{
+  font-weight:700;
+  letter-spacing: -0.5px;
+}
+.brand-accent{
+  color: var(--accent);
+}
+
+.hero{
+  padding: 4rem 0;
+  background: linear-gradient(180deg, rgba(59,130,246,0.06), transparent 60%);
+  border-radius: 16px;
+}
+
+.glass{
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 6px 18px rgba(2,6,23,0.6);
+  border-radius: 14px;
+}
+
+.card-hover{
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.card-hover:hover{
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 12px 30px rgba(59,130,246,0.12);
+}
+
+.btn-gradient{
+  background: linear-gradient(90deg,var(--primary), #60a5fa);
+  border: none;
+  color: white;
+  box-shadow: 0 6px 18px rgba(59,130,246,0.12);
+}
+
+.chat-wrapper{
+  max-height: 60vh;
+  overflow:auto;
+  padding: 8px;
+}
+
+.chat-message{
+  display:block;
+}
+.chat-message .msg{
+  display:inline-block;
+  padding:12px 16px;
+  border-radius: 14px;
+  max-width: 80%;
+}
+.chat-message.user .msg{
+  background: rgba(59,130,246,0.12);
+  color: #e6f0ff;
+  margin-left: auto;
+  border-top-right-radius: 4px;
+}
+.chat-message.ai .msg{
+  background: linear-gradient(90deg, rgba(6,182,212,0.12), rgba(59,130,246,0.06));
+  color: #e6f8fb;
+  border-top-left-radius:4px;
+}
+
+.meta{
+  margin-top:6px;
+}
+
+.form-control:focus{
+  box-shadow: 0 6px 18px rgba(59,130,246,0.08);
+  border-color: var(--primary);
+}
+
+a, .nav-link{
+  transition: color .15s ease, transform .15s ease;
+}
+
+a:hover, .nav-link:hover{ transform: translateY(-2px); color: var(--primary); }
+
+@media (max-width:576px){
+  .hero{ padding:2rem 1rem; }
+}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}History — VoltieAI{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-10">
+      <div class="glass p-3 mb-3 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Question History</h5>
+        <form class="d-flex" method="GET">
+          <input name="q" class="form-control form-control-sm me-2" placeholder="Search questions..." value="{{ request.GET.q }}">
+          <button class="btn btn-sm btn-outline-light">Search</button>
+        </form>
+      </div>
+
+      {% if entries %}
+        <div class="row g-3">
+          {% for e in entries %}
+            <div class="col-12">
+              <div class="glass p-3">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <h6 class="mb-1">{{ e.question_text|truncatechars:120 }}</h6>
+                    <p class="mb-1 text-muted small">{{ e.answer_text|default:'Pending' }}</p>
+                    <div class="small text-muted">Source: {{ e.plugin_source }} • {{ e.created_at }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="glass p-4 text-center text-muted">
+          <p class="mb-0">No questions yet. Ask your first question to see it here.</p>
+          <a class="btn btn-gradient mt-3" href="{% url 'ask_question' %}">Ask Question</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

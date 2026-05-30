@@ -1,39 +1,47 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Ask Question</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-<h2>Ask Electrical Machines Question</h2>
+{% block title %}Ask Question — VoltieAI{% endblock %}
 
-<form method="POST">
-    {% csrf_token %}
+{% block content %}
+    <div class="row">
+        <div class="col-12 col-md-8 mx-auto">
+            <div class="glass p-4">
+                <h4 class="mb-3">Ask Electrical Machines Question</h4>
 
-    {{ form.as_p }}
+                <form method="POST">
+                    {% csrf_token %}
 
-    <button type="submit">
-        Get Answer
-    </button>
-</form>
+                    <div class="mb-3">
+                        {{ form.question }}
+                    </div>
 
-{% if answer %}
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-gradient">Get AI Answer</button>
+                        <a class="btn btn-outline-light" href="{% url 'home' %}">Cancel</a>
+                    </div>
+                </form>
 
-<hr>
+            </div>
 
-<h3>Your Question</h3>
-<p>{{ question }}</p>
+            <div class="mt-4">
+                {% if answer and question %}
+                    <div class="chat-wrapper">
+                        <div class="chat-message user mb-3">
+                            <div class="msg">{{ question }}</div>
+                            <div class="meta small text-muted">You • just now</div>
+                        </div>
 
-<h3>AI Answer</h3>
-<p>{{ answer }}</p>
-
-{% endif %}
-
-{% if error %}
-<p style="color:red;">
-    {{ error }}
-</p>
-{% endif %}
-
-</body>
-</html>
+                        <div class="chat-message ai mb-3">
+                            <div class="msg">{{ answer }}</div>
+                            <div class="meta small text-muted">AI {% if plugin_source %}<span class="badge bg-info text-dark ms-2">{{ plugin_source }}</span>{% endif %} • just now</div>
+                        </div>
+                    </div>
+                {% elif request.method == 'POST' and request.POST.question %}
+                    <div class="alert alert-info">Submitting your question — please wait.</div>
+                {% elif success %}
+                    <div class="alert alert-success">Your question was submitted successfully.</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

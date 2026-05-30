@@ -89,7 +89,6 @@ def ask_question(request):
             question = form.cleaned_data["question"]
 
             try:
-
                 answer = get_ai_answer(question)
 
                 QAEntry.objects.create(
@@ -106,18 +105,32 @@ def ask_question(request):
                         "form": QuestionForm(),
                         "question": question,
                         "answer": answer,
+                        "plugin_source": "Groq",
                         "success": True
                     }
                 )
 
             except Exception as e:
+                # On failure, save an explicit error answer and mark plugin_source accordingly
+                error_answer = "Unable to generate answer."
+
+                QAEntry.objects.create(
+                    user=request.user,
+                    question_text=question,
+                    answer_text=error_answer,
+                    plugin_source="Groq Error"
+                )
 
                 return render(
                     request,
                     "ask_question.html",
                     {
                         "form": form,
-                        "error": str(e)
+                        "question": question,
+                        "answer": error_answer,
+                        "plugin_source": "Groq Error",
+                        "error": str(e),
+                        "success": True
                     }
                 )
 
