@@ -1,4 +1,4 @@
-from config.wsgi import application
+from config.asgi import application
 
-# Vercel expects a top-level ASGI/WSGI callable named app.
+# Vercel expects a top-level callable named app.
 app = application
