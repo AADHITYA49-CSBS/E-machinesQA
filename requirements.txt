@@ -6,7 +6,6 @@ charset-normalizer==3.4.7
 Django==6.0.5
 groq
 idna==3.17
-mysqlclient==2.2.8
 python-dotenv==1.2.2
 requests==2.34.2
 sqlparse==0.5.5
