@@ -34,7 +34,7 @@
 
                         <div class="chat-message ai mb-3">
                             <div class="msg answer-content">{{ answer|markdown_to_html }}</div>
-                            <div class="meta small text-muted">AI {% if plugin_source %}<span class="badge bg-info text-dark ms-2">{{ plugin_source }}</span>{% endif %} • just now</div>
+                            <div class="meta small text-muted">AI {% if plugin_source %}<span class="badge bg-secondary ms-2">{{ plugin_source }}</span>{% endif %} • just now</div>
                         </div>
                     </div>
                 {% elif request.method == 'POST' and request.POST.question %}

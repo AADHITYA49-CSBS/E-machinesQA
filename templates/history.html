@@ -9,7 +9,7 @@
         <h5 class="mb-0">Question History</h5>
         <form class="d-flex" method="GET">
           <input name="q" class="form-control form-control-sm me-2" placeholder="Search questions..." value="{{ request.GET.q }}">
-          <button class="btn btn-sm btn-outline-light">Search</button>
+          <button class="btn btn-sm btn-outline-soft">Search</button>
         </form>
       </div>
 
@@ -21,7 +21,7 @@
                 <div class="me-3">
                   <h6 class="mb-1">{{ e.question_text|truncatechars:160 }}</h6>
                   <p class="mb-1 text-muted small">{{ e.answer_text|default:'Pending' }}</p>
-                  <div class="small text-muted">Source: <span class="badge glow-badge bg-dark text-light">{{ e.plugin_source }}</span> • {{ e.created_at|date:"Y-m-d H:i" }}</div>
+                  <div class="small text-muted">Source: <span class="badge glow-badge bg-light text-dark border">{{ e.plugin_source }}</span> • {{ e.created_at|date:"Y-m-d H:i" }}</div>
                 </div>
                 <div class="text-end">
                   <a class="btn btn-outline-soft btn-sm" href="#">View</a>
