@@ -175,3 +175,19 @@ electrical-machines-qa/
 ## Status
 
 Completed and fully functional.
+
+---
+
+## Deploying on Render
+
+1. Push this repository to GitHub.
+2. Create a new Render Web Service and connect the repository.
+3. Add a Render PostgreSQL database, or let the included `render.yaml` provision one.
+4. Set `GROQ_API_KEY` in the Render environment variables.
+5. Deploy the service.
+6. Open the Render URL and test login, ask-question, and history pages.
+
+If you use the `render.yaml` blueprint, Render will use:
+- `gunicorn config.wsgi:application` as the start command
+- `python manage.py collectstatic --noinput` during build
+- `DATABASE_URL` from the Render database
