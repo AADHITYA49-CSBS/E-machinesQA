@@ -175,32 +175,3 @@ electrical-machines-qa/
 ## Status
 
 Completed and fully functional.
-
----
-
-## Deploying on Vercel
-
-This project can run on Vercel as a Django serverless app.
-
-1. Push the repository to GitHub.
-2. Create a database you can access from Vercel. Keep the current MySQL setup or move to a hosted MySQL service.
-3. In Vercel, import the GitHub repository.
-4. Set these environment variables in the Vercel project settings:
-  - `SECRET_KEY`
-  - `DEBUG=False`
-  - `GROQ_API_KEY`
-  - `DB_NAME`
-  - `DB_USER`
-  - `DB_PASSWORD`
-  - `DB_HOST`
-  - `DB_PORT`
-5. Deploy the project.
-6. Open the Vercel URL and test login, ask-question, and history pages.
-
-Local preview with the Vercel CLI:
-
-```bash
-npm i -g vercel
-vercel login
-vercel dev
-```
