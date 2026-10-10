@@ -31,6 +31,15 @@ SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-dev-key")
 DEBUG = os.getenv("DEBUG") == "True"
 
 ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv(
+        'CSRF_TRUSTED_ORIGINS',
+        'https://electramind-ai.onrender.com',
+    ).split(',')
+    if origin.strip()
+]
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 # Application definition
@@ -84,8 +93,15 @@ ASGI_APPLICATION = 'config.asgi.application'
 database_url = os.getenv('DATABASE_URL')
 
 if database_url:
+    database_config = dj_database_url.config(
+        default=database_url,
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
+    if database_config['ENGINE'] == 'django.db.backends.postgresql':
+        database_config.setdefault('OPTIONS', {})['sslmode'] = 'require'
     DATABASES = {
-        'default': dj_database_url.config(default=database_url, conn_max_age=600)
+        'default': database_config
     }
 else:
     use_mysql = all(
