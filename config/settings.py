@@ -91,8 +91,16 @@ ASGI_APPLICATION = 'config.asgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 database_url = os.getenv('DATABASE_URL')
+use_sqlite = os.getenv('USE_SQLITE', '').lower() in {'1', 'true', 'yes'}
 
-if database_url:
+if use_sqlite:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.getenv('SQLITE_PATH', '/tmp/electramind.sqlite3'),
+        }
+    }
+elif database_url:
     database_config = dj_database_url.config(
         default=database_url,
         conn_max_age=600,
