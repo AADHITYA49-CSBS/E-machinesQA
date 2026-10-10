@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.db import DatabaseError
 from django.test import TestCase
 
+from qa.groq_service import get_ai_answer
+
 
 class AuthenticationTests(TestCase):
     def test_register_creates_user_and_redirects_to_login(self):
@@ -35,6 +37,13 @@ class AuthenticationTests(TestCase):
 
         self.assertEqual(response.status_code, 503)
         self.assertContains(response, "Account service is temporarily unavailable", status_code=503)
+
+
+class QuestionScopeTests(TestCase):
+    def test_rejects_non_electrical_questions_without_calling_ai(self):
+        answer = get_ai_answer("Where is India?")
+
+        self.assertIn("only electrical", answer)
     @patch("qa.views.authenticate", side_effect=DatabaseError)
     def test_login_returns_actionable_response_when_database_is_unavailable(self, _authenticate):
         response = self.client.post(

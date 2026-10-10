@@ -1,12 +1,31 @@
 import os
 from groq import Groq
 
-client = Groq(
-    api_key=os.getenv("GROQ_API_KEY")
-)
 MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-20b")
+SCOPE_KEYWORDS = {
+    "electrical", "electronics", "electronic", "circuit", "transformer",
+    "motor", "generator", "alternator", "induction", "synchronous",
+    "winding", "rotor", "stator", "armature", "commutator", "slip",
+    "torque", "emf", "voltage", "current", "power", "frequency", "phase",
+    "capacitor", "inductor", "resistor", "diode", "transistor", "inverter",
+    "rectifier", "relay", "switchgear", "machine", "machines", "ac", "dc",
+}
+
+
+def is_electrical_question(question):
+    words = set(question.lower().replace('-', ' ').split())
+    return bool(words & SCOPE_KEYWORDS)
 
 def get_ai_answer(question):
+    if not is_electrical_question(question):
+        return (
+            "I can answer only electrical, electronics, and electrical-machines "
+            "questions. Try asking about transformers, motors, generators, circuits, "
+            "power systems, or related topics."
+        )
+
+    client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+
     # Instruct the model to produce a concise, structured markdown answer
     system_prompt = (
         "You are ElectraMind, an Electrical Machines expert and professional engineering assistant. "
