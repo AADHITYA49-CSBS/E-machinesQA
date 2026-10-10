@@ -4,6 +4,7 @@ from groq import Groq
 client = Groq(
     api_key=os.getenv("GROQ_API_KEY")
 )
+MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-20b")
 
 def get_ai_answer(question):
     # Instruct the model to produce a concise, structured markdown answer
@@ -23,7 +24,7 @@ def get_ai_answer(question):
     )
 
     response = client.chat.completions.create(
-        model="llama-3.1-8b-instant",
+        model=MODEL,
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": question}
@@ -31,7 +32,9 @@ def get_ai_answer(question):
         max_tokens=600
     )
 
-    content = response.choices[0].message.content
+    content = (response.choices[0].message.content or "").strip()
+    if not content:
+        raise RuntimeError("Groq returned an empty answer.")
 
     # Ensure output is not excessively long (safety truncate)
     def truncate_to_words(text, max_words=150):
@@ -41,10 +44,10 @@ def get_ai_answer(question):
         return ' '.join(words[:max_words]).rstrip() + '\n\n*Answer truncated.*'
 
     # If the model didn't follow the exact headers, wrap as a fallback
-    headers = ["Definition:", "Key Points:", "Applications:", "Summary:"]
-    if not any(h in content for h in headers):
+    headers = ["definition", "key points", "applications", "summary"]
+    if not any(header in content.lower() for header in headers):
         # Best-effort fallback: place entire content under Definition and add placeholders
-        fallback = f"Definition:\n{content.strip()}\n\nKey Points:\n• (see definition)\n\nApplications:\n• (see definition)\n\nSummary:\n{truncate_to_words(content, 50)}"
-        return truncate_to_words(fallback, 200)
+        fallback = f"Definition:\n{content}\n\nKey Points:\n- See definition.\n\nApplications:\n- See definition.\n\nSummary:\n{truncate_to_words(content, 50)}"
+        return truncate_to_words(fallback, 150)
 
-    return truncate_to_words(content, 200)
+    return truncate_to_words(content, 150)

@@ -13,6 +13,8 @@ services:
         generateValue: true
       - key: GROQ_API_KEY
         sync: false
+      - key: GROQ_MODEL
+        value: openai/gpt-oss-20b
       - key: CSRF_TRUSTED_ORIGINS
         value: https://electramind-ai.onrender.com
       - key: USE_SQLITE
