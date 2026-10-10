@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.db import DatabaseError
 from django.test import TestCase
 
-from qa.groq_service import get_ai_answer
+from qa.groq_service import get_ai_answer, is_electrical_question
 
 
 class AuthenticationTests(TestCase):
@@ -44,6 +44,11 @@ class QuestionScopeTests(TestCase):
         answer = get_ai_answer("Where is India?")
 
         self.assertIn("only electrical", answer)
+
+    def test_accepts_electrical_terms_with_punctuation(self):
+        self.assertTrue(is_electrical_question("What are motors?"))
+        self.assertTrue(is_electrical_question("What is a coil?"))
+        self.assertTrue(is_electrical_question("What is a cable?"))
     @patch("qa.views.authenticate", side_effect=DatabaseError)
     def test_login_returns_actionable_response_when_database_is_unavailable(self, _authenticate):
         response = self.client.post(

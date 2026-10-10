@@ -1,20 +1,28 @@
 import os
+import re
 from groq import Groq
 
 MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-20b")
 SCOPE_KEYWORDS = {
     "electrical", "electronics", "electronic", "circuit", "transformer",
-    "motor", "generator", "alternator", "induction", "synchronous",
+    "motor", "motors", "generator", "generators", "alternator", "alternators",
+    "transformers", "induction", "synchronous",
     "winding", "rotor", "stator", "armature", "commutator", "slip",
     "torque", "emf", "voltage", "current", "power", "frequency", "phase",
     "capacitor", "inductor", "resistor", "diode", "transistor", "inverter",
     "rectifier", "relay", "switchgear", "machine", "machines", "ac", "dc",
+    "coil", "coils", "cable", "cables", "wire", "wires", "fuse", "fuses",
+    "battery", "batteries", "spark", "earthing",
+}
+BLOCKED_KEYWORDS = {
+    "human", "person", "people", "animal", "nature", "plant", "tree",
+    "country", "city", "india", "politics", "food", "movie", "sports",
 }
 
 
 def is_electrical_question(question):
-    words = set(question.lower().replace('-', ' ').split())
-    return bool(words & SCOPE_KEYWORDS)
+    words = set(re.findall(r"[a-z0-9]+", question.lower()))
+    return not words.intersection(BLOCKED_KEYWORDS) and bool(words & SCOPE_KEYWORDS)
 
 def get_ai_answer(question):
     if not is_electrical_question(question):
