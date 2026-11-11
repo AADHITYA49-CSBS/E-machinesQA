@@ -3,10 +3,10 @@
 {% block title %}Register — ElectraMind AI{% endblock %}
 
 {% block content %}
-    <div class="row justify-content-center">
-        <div class="col-12 col-sm-10 col-md-6 col-lg-4">
-            <div class="glass p-4 mt-5">
-                <h3 class="mb-3 text-center">Create your ElectraMind account</h3>
+    <div class="auth-layout">
+        <div class="auth-aside auth-aside-register"><p class="eyebrow"><span class="eyebrow-dot"></span> Make space to learn</p><h1>Your next<br><em>breakthrough.</em></h1><p>Save the questions that matter and build your own engineering reference as you go.</p></div>
+        <div class="auth-card">
+                <p class="eyebrow">GET STARTED</p><h2>Create an account</h2><p class="auth-subtitle">A focused space for better questions.</p>
 
                 {% if error %}
                     <div class="alert alert-danger">{{ error }}</div>
@@ -15,24 +15,23 @@
                 <form method="POST">
                     {% csrf_token %}
 
-                    <div class="mb-3">
+                    <div class="field-group">
                         <label class="form-label">Username</label>
                         <input class="form-control" type="text" name="username" placeholder="Username" required>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="field-group">
                         <label class="form-label">Password</label>
                         <input class="form-control" type="password" name="password" placeholder="Password" required>
                     </div>
 
                     <div class="d-grid">
-                        <button class="btn btn-modern">Create account</button>
+                        <button class="btn btn-primary">Create account <span>↗</span></button>
                     </div>
                 </form>
 
                 <div class="mt-3 text-center small text-muted">
                     Already have an account? <a href="{% url 'login' %}">Sign in</a>
-                </div>
             </div>
         </div>
     </div>

@@ -3,10 +3,10 @@
 {% block title %}Login — ElectraMind AI{% endblock %}
 
 {% block content %}
-    <div class="row justify-content-center">
-        <div class="col-12 col-sm-10 col-md-6 col-lg-4">
-            <div class="glass p-4 mt-5">
-                <h3 class="mb-3 text-center">Sign in to ElectraMind</h3>
+    <div class="auth-layout">
+        <div class="auth-aside"><p class="eyebrow"><span class="eyebrow-dot"></span> Welcome back</p><h1>Good ideas<br><em>start here.</em></h1><p>Return to your questions, pick up a concept, and keep moving forward.</p></div>
+        <div class="auth-card">
+                <p class="eyebrow">YOUR WORKSPACE</p><h2>Sign in</h2><p class="auth-subtitle">Continue learning with ElectraMind.</p>
 
                 {% if error %}
                     <div class="alert alert-danger">{{ error }}</div>
@@ -14,12 +14,12 @@
 
                 <form method="POST">
                     {% csrf_token %}
-                    <div class="mb-3">
+                    <div class="field-group">
                         <label class="form-label">Username</label>
                         <input class="form-control form-control-lg" type="text" name="username" placeholder="Username" required>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="field-group">
                         <label class="form-label">Password</label>
                         <input class="form-control form-control-lg" type="password" name="password" placeholder="Password" required>
                     </div>
@@ -31,13 +31,12 @@
                     {% endif %}
 
                     <div class="d-grid">
-                        <button class="btn btn-modern btn-lg">Sign in</button>
+                        <button class="btn btn-primary btn-lg">Sign in <span>↗</span></button>
                     </div>
                 </form>
 
                 <div class="mt-3 text-center small text-muted">
                     Don't have an account? <a href="{% url 'register' %}">Create one</a>
-                </div>
             </div>
         </div>
     </div>

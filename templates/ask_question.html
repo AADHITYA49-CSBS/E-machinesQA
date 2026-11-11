@@ -4,46 +4,44 @@
 
 {% load markdown_extras %}
 {% block content %}
-    <div class="row">
-        <div class="col-12 col-md-8 mx-auto">
-            <div class="glass p-4">
-                <h4 class="mb-3">Ask ElectraMind AI</h4>
+    <div class="workspace-layout">
+        <div class="workspace-intro">
+            <p class="eyebrow"><span class="eyebrow-dot"></span> Learning workspace</p>
+            <h1>What are you<br><em>working through?</em></h1>
+            <p>Bring a question from class, the lab, or your next project. ElectraMind will help you reason it out.</p>
+            <div class="prompt-suggestions"><span>Try asking</span><a href="{% url 'ask_question' %}">How does a transformer regulate voltage?</a><a href="{% url 'ask_question' %}">Why does an induction motor slip?</a></div>
+        </div>
+        <div class="workspace-panel">
+            <div class="panel-topline"><span class="status-dot"></span><span>ElectraMind is ready</span><span class="panel-kicker">PRIVATE WORKSPACE</span></div>
 
-                <form method="POST">
+                <form method="POST" class="question-form">
                     {% csrf_token %}
-
-                    <div class="mb-3">
+                    <label class="sr-only" for="{{ form.question.id_for_label }}">Your question</label>
+                    <div class="question-input">
                         {{ form.question }}
+                        <span class="input-mark">↗</span>
                     </div>
-
-                    <div class="d-flex gap-2">
-                        <button id="askBtn" class="btn btn-modern">Get AI Answer</button>
-                        <a class="btn btn-outline-soft" href="{% url 'home' %}">Cancel</a>
+                    <div class="question-actions">
+                        <span class="input-hint">Press the button when you’re ready to explore.</span>
+                        <button id="askBtn" class="btn btn-primary">Get an answer <span aria-hidden="true">↗</span></button>
                     </div>
                 </form>
-
-            </div>
-
-            <div class="mt-4">
+        </div>
+    </div>
+    <div class="answer-area">
                 {% if answer and question %}
-                    <div class="chat-wrapper">
-                        <div class="chat-message user mb-3">
-                            <div class="msg">{{ question }}</div>
-                            <div class="meta small text-muted">You • just now</div>
-                        </div>
-
-                        <div class="chat-message ai mb-3">
-                            <div class="msg answer-content">{{ answer|markdown_to_html }}</div>
-                            <div class="meta small text-muted">AI {% if plugin_source %}<span class="badge bg-secondary ms-2">{{ plugin_source }}</span>{% endif %} • just now</div>
+                    <div class="answer-thread">
+                        <div class="thread-question"><span class="thread-label">YOUR QUESTION</span><p>{{ question }}</p></div>
+                        <div class="thread-answer">
+                            <div class="answer-header"><span class="answer-avatar">E</span><span><strong>ElectraMind</strong><small>Just now{% if plugin_source %} · {{ plugin_source }}{% endif %}</small></span></div>
+                            <div class="answer-content">{{ answer|markdown_to_html }}</div>
                         </div>
                     </div>
                 {% elif request.method == 'POST' and request.POST.question %}
-                    <div class="alert alert-info">Submitting your question — please wait.</div>
+                    <div class="notice notice-info"><span class="status-dot"></span> Thinking through your question…</div>
                 {% elif success %}
-                    <div class="alert alert-success">Your question was submitted successfully.</div>
+                    <div class="notice notice-success">Your question was submitted successfully.</div>
                 {% endif %}
-            </div>
-        </div>
     </div>
     <script>
         // Show a subtle loading state on the button after submit

@@ -3,50 +3,26 @@
 {% block title %}History — VoltieAI{% endblock %}
 
 {% block content %}
-  <div class="row justify-content-center">
-    <div class="col-12 col-lg-10">
-      <div class="glass p-3 mb-3 d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Question History</h5>
-        <form class="d-flex" method="GET">
-          <input name="q" class="form-control form-control-sm me-2" placeholder="Search questions..." value="{{ request.GET.q }}">
-          <button class="btn btn-sm btn-outline-soft">Search</button>
+  <div class="history-page">
+      <div class="history-heading"><div><p class="eyebrow"><span class="eyebrow-dot"></span> Your learning trail</p><h1>Question history</h1><p>Pick up a thought where you left it.</p></div><a class="btn btn-primary" href="{% url 'ask_question' %}">Ask a new question <span>↗</span></a></div>
+      <div class="history-toolbar">
+        <form class="search-form" method="GET">
+          <span aria-hidden="true">⌕</span><input name="q" placeholder="Search your questions..." value="{{ request.GET.q }}"><button>Search</button>
         </form>
       </div>
 
       {% if entries %}
-        <div class="row g-3">
+        <div class="history-list">
           {% for e in entries %}
-            <div class="col-12">
-              <div class="glass p-3 d-flex justify-content-between align-items-start">
-                <div class="me-3">
-                  <h6 class="mb-1">{{ e.question_text|truncatechars:160 }}</h6>
-                  <p class="mb-1 text-muted small">{{ e.answer_text|default:'Pending' }}</p>
-                  <div class="small text-muted">Source: <span class="badge glow-badge bg-light text-dark border">{{ e.plugin_source }}</span> • {{ e.created_at|date:"Y-m-d H:i" }}</div>
-                </div>
-                <div class="text-end">
-                  <a class="btn btn-outline-soft btn-sm" href="#">View</a>
-                </div>
-              </div>
-            </div>
+            <article class="history-item">
+                <div class="history-date"><strong>{{ e.created_at|date:"d" }}</strong><span>{{ e.created_at|date:"M Y" }}</span></div>
+                <div class="history-copy"><span class="history-tag">{{ e.plugin_source|default:"ElectraMind" }}</span><h2>{{ e.question_text|truncatechars:160 }}</h2><p>{{ e.answer_text|default:'Pending'|truncatechars:220 }}</p></div>
+                <div class="history-arrow" aria-hidden="true">↗</div>
           {% endfor %}
         </div>
-        <!-- Pagination placeholder -->
-        <div class="d-flex justify-content-center mt-4">
-          <nav aria-label="Page navigation">
-            <ul class="pagination pagination-sm">
-              <li class="page-item disabled"><a class="page-link">Previous</a></li>
-              <li class="page-item active"><a class="page-link">1</a></li>
-              <li class="page-item"><a class="page-link">2</a></li>
-              <li class="page-item"><a class="page-link">Next</a></li>
-            </ul>
-          </nav>
-        </div>
       {% else %}
-        <div class="glass p-4 text-center text-muted">
-          <p class="mb-0">No questions asked yet.</p>
-          <a class="btn btn-modern mt-3" href="{% url 'ask_question' %}">Ask New Question</a>
+        <div class="empty-state"><div class="empty-icon">⌁</div><h2>No questions yet.</h2><p>Your next useful explanation is one question away.</p><a class="btn btn-primary mt-2" href="{% url 'ask_question' %}">Start exploring <span>↗</span></a>
         </div>
       {% endif %}
-    </div>
   </div>
 {% endblock %}
