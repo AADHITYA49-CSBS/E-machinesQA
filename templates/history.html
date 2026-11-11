@@ -4,7 +4,7 @@
 
 {% block content %}
   <div class="history-page">
-      <div class="history-heading"><div><p class="eyebrow"><span class="eyebrow-dot"></span> Your learning trail</p><h1>Question history</h1><p>Pick up a thought where you left it.</p></div><a class="btn btn-primary" href="{% url 'ask_question' %}">Ask a new question <span>↗</span></a></div>
+      <div class="history-heading"><div><p class="eyebrow"><span class="eyebrow-dot"></span> Saved electrical Q&amp;A</p><h1>Question history</h1><p>Review your previous machine questions and AI answers.</p></div><a class="btn btn-primary" href="{% url 'ask_question' %}">Ask a question <span>↗</span></a></div>
       <div class="history-toolbar">
         <form class="search-form" method="GET">
           <span aria-hidden="true">⌕</span><input name="q" placeholder="Search your questions..." value="{{ request.GET.q }}"><button>Search</button>
@@ -21,7 +21,7 @@
           {% endfor %}
         </div>
       {% else %}
-        <div class="empty-state"><div class="empty-icon">⌁</div><h2>No questions yet.</h2><p>Your next useful explanation is one question away.</p><a class="btn btn-primary mt-2" href="{% url 'ask_question' %}">Start exploring <span>↗</span></a>
+        <div class="empty-state"><div class="empty-icon">⌁</div><h2>No saved questions yet.</h2><p>Ask ElectraMind about a transformer, motor, generator, or any electrical-machine concept.</p><a class="btn btn-primary mt-2" href="{% url 'ask_question' %}">Ask your first question <span>↗</span></a>
         </div>
       {% endif %}
   </div>

@@ -6,13 +6,13 @@
 {% block content %}
     <div class="workspace-layout">
         <div class="workspace-intro">
-            <p class="eyebrow"><span class="eyebrow-dot"></span> Learning workspace</p>
-            <h1>What are you<br><em>working through?</em></h1>
-            <p>Bring a question from class, the lab, or your next project. ElectraMind will help you reason it out.</p>
-            <div class="prompt-suggestions"><span>Try asking</span><a href="{% url 'ask_question' %}">How does a transformer regulate voltage?</a><a href="{% url 'ask_question' %}">Why does an induction motor slip?</a></div>
+            <p class="eyebrow"><span class="eyebrow-dot"></span> Electrical machines Q&amp;A</p>
+            <h1>What machine<br><em>can we explain?</em></h1>
+            <p>Ask about operation, construction, characteristics, calculations, faults, or applications. ElectraMind will return a focused engineering answer.</p>
+            <div class="prompt-suggestions"><span>Example questions</span><a href="{% url 'ask_question' %}">How does a transformer regulate voltage?</a><a href="{% url 'ask_question' %}">Why does an induction motor slip?</a></div>
         </div>
         <div class="workspace-panel">
-            <div class="panel-topline"><span class="status-dot"></span><span>ElectraMind is ready</span><span class="panel-kicker">PRIVATE WORKSPACE</span></div>
+            <div class="panel-topline"><span class="status-dot"></span><span>ElectraMind AI is ready</span><span class="panel-kicker">ELECTRICAL MACHINES</span></div>
 
                 <form method="POST" class="question-form">
                     {% csrf_token %}
@@ -22,8 +22,8 @@
                         <span class="input-mark">↗</span>
                     </div>
                     <div class="question-actions">
-                        <span class="input-hint">Press the button when you’re ready to explore.</span>
-                        <button id="askBtn" class="btn btn-primary">Get an answer <span aria-hidden="true">↗</span></button>
+                        <span class="input-hint">Ask one electrical-machines question at a time.</span>
+                        <button id="askBtn" class="btn btn-primary">Generate answer <span aria-hidden="true">↗</span></button>
                     </div>
                 </form>
         </div>
